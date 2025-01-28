@@ -71,6 +71,19 @@ unaligned accesses (CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS=y). One could
 still enable it in config, just note that it will produce a lot of UBSAN
 reports.
 
+Additional UBSAN options include::
+
+  CONFIG_UBSAN_INTEGER_WRAP=y
+
+This enables checking for integer arithmetic wrap-around (overflow/underflow).
+It instruments signed and unsigned integer overflow, as well as implicit
+truncation operations. This option is currently limited to specific types
+(like ``size_t``) via the ``__no_wrap`` annotation.
+
+For detailed information about arithmetic overflow handling, overflow behavior
+annotations, and best practices, see:
+Documentation/process/arithmetic-overflow.rst
+
 References
 ----------
 
