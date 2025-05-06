@@ -2021,6 +2021,9 @@ ssize_t nvmem_device_cell_read(struct nvmem_device *nvmem,
 	if (rc)
 		return rc;
 
+	if (len > SSIZE_MAX)
+		return -EINVAL;
+
 	return len;
 }
 EXPORT_SYMBOL_GPL(nvmem_device_cell_read);
