@@ -1570,7 +1570,7 @@ static void n_tty_receive_buf_standard(struct tty_struct *tty, const u8 *cp,
 	struct n_tty_data *ldata = tty->disc_data;
 	u8 flag = TTY_NORMAL;
 
-	while (count--) {
+	while (count--) { // FIXME: idiom broke
 		u8 c = *cp++;
 
 		if (fp)

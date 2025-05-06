@@ -2050,7 +2050,7 @@ ssize_t nvmem_device_cell_read(struct nvmem_device *nvmem,
 {
 	struct nvmem_cell_entry cell;
 	int rc;
-	ssize_t len;
+	size_t len;
 
 	if (!nvmem)
 		return -EINVAL;
@@ -2062,6 +2062,9 @@ ssize_t nvmem_device_cell_read(struct nvmem_device *nvmem,
 	rc = __nvmem_cell_read(nvmem, &cell, buf, &len, NULL, 0);
 	if (rc)
 		return rc;
+
+	if (len > SSIZE_MAX)
+		return -EINVAL;
 
 	return len;
 }
