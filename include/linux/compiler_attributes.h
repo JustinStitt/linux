@@ -397,6 +397,20 @@
 #endif
 
 /*
+ * Optional: only supported by Clang with -Xclang -experimental-foverflow-behavior-types
+ * passed via CONFIG_UBSAN_INTEGER_WRAP
+ *
+ * clang: https://clang.llvm.org/docs/OverflowBehaviorTypes.html
+ */
+#if __has_attribute(overflow_behavior) && defined(INTEGER_WRAP)
+# define __trap                     __attribute__((overflow_behavior(trap)))
+# define __wrap                     __attribute__((overflow_behavior(wrap)))
+#else
+# define __trap
+# define __wrap
+#endif
+
+/*
  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-weak-function-attribute
  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-weak-variable-attribute
  */
