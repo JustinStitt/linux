@@ -17,12 +17,23 @@ ubsan-cflags-$(CONFIG_UBSAN_TRAP)		+= $(CFLAGS_UBSAN_TRAP)
 
 export CFLAGS_UBSAN := $(ubsan-cflags-y)
 
-ubsan-integer-wrap-cflags-$(CONFIG_UBSAN_INTEGER_WRAP)     +=	\
-	-DINTEGER_WRAP						\
-	-fsanitize-undefined-ignore-overflow-pattern=all	\
-	-fsanitize=signed-integer-overflow			\
-	-fsanitize=unsigned-integer-overflow			\
-	-fsanitize=implicit-signed-integer-truncation		\
-	-fsanitize=implicit-unsigned-integer-truncation		\
-	-fsanitize-ignorelist=$(srctree)/scripts/integer-wrap-ignore.scl
+# Instead of specifying `all`, let's pick our patterns piecemeal so we aren't
+# blindsided by compiler upgrades.
+UBSAN_INTEGER_WRAP_IGNORE_PATTERNS := negated-unsigned-const,$\
+				      unsigned-post-decr-while,$\
+				      add-signed-overflow-test,$\
+				      add-unsigned-overflow-test
+
+ubsan-integer-wrap-cflags-$(CONFIG_UBSAN_INTEGER_WRAP) +=		 \
+	-DINTEGER_WRAP							 \
+	-fsanitize=signed-integer-overflow				 \
+	-fsanitize=unsigned-integer-overflow				 \
+	-fsanitize=implicit-signed-integer-truncation			 \
+	-fsanitize=implicit-unsigned-integer-truncation			 \
+	-fsanitize-ignorelist=$(srctree)/scripts/integer-wrap-ignore.scl \
+	-foverflow-behavior-types					 \
+	-fsanitize-undefined-ignore-overflow-pattern=$(UBSAN_INTEGER_WRAP_IGNORE_PATTERNS) \
+	-Wno-incompatible-pointer-types-discards-overflow-behavior
+
+
 export CFLAGS_UBSAN_INTEGER_WRAP := $(ubsan-integer-wrap-cflags-y)
