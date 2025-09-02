@@ -2008,7 +2008,7 @@ ssize_t nvmem_device_cell_read(struct nvmem_device *nvmem,
 {
 	struct nvmem_cell_entry cell;
 	int rc;
-	ssize_t len;
+	size_t len;
 
 	if (!nvmem)
 		return -EINVAL;
