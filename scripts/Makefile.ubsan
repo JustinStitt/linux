@@ -33,7 +33,8 @@ ubsan-integer-wrap-cflags-$(CONFIG_UBSAN_INTEGER_WRAP) +=		 \
 	-fsanitize-ignorelist=$(srctree)/scripts/integer-wrap-ignore.scl \
 	-foverflow-behavior-types					 \
 	-fsanitize-undefined-ignore-overflow-pattern=$(UBSAN_INTEGER_WRAP_IGNORE_PATTERNS) \
-	-Wno-incompatible-pointer-types-discards-overflow-behavior
+	-Wno-incompatible-pointer-types-discards-overflow-behavior \
+	-Wno-format # HACK: temporarily disable -Wformat until we can fix all the warnings caused by OBTs
 
 
 export CFLAGS_UBSAN_INTEGER_WRAP := $(ubsan-integer-wrap-cflags-y)
