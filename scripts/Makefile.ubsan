@@ -31,7 +31,7 @@ ubsan-integer-wrap-cflags-$(CONFIG_UBSAN_INTEGER_WRAP) +=		 \
 	-fsanitize=implicit-signed-integer-truncation			 \
 	-fsanitize=implicit-unsigned-integer-truncation			 \
 	-fsanitize-ignorelist=$(srctree)/scripts/integer-wrap-ignore.scl \
-	-foverflow-behavior-types					 \
+	-Xclang -fexperimental-overflow-behavior-types			 \
 	-fsanitize-undefined-ignore-overflow-pattern=$(UBSAN_INTEGER_WRAP_IGNORE_PATTERNS) \
 	-Wno-incompatible-pointer-types-discards-overflow-behavior
 
